@@ -1,0 +1,75 @@
+<html ng-app="EarthDollarWallet">
+  <head>
+    <title>Earth Dollar Wallet</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/earth-dollar.css">
+    <script src="js/angular.min.js"></script>
+    <script src="js/EarthDollarCtrl.js"></script>
+    <script src="js/web3.min.js"></script>
+    <script>
+      web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545'));web3.eth.defaultAccount = web3.eth.accounts[0];EarthDollarWalletsAbi = [{"constant":false,"inputs":[{"name":"minterToRemove","type":"address"}],"name":"removeMinter","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"_value","type":"uint256"},{"name":"_to","type":"address"}],"name":"mintCoin","outputs":[],"type":"function"},{"constant":true,"inputs":[{"name":"index","type":"uint256"}],"name":"minterAt","outputs":[{"name":"","type":"address"}],"type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_value","type":"uint256"},{"name":"_to","type":"address"}],"name":"sendCoinFrom","outputs":[{"name":"_success","type":"bool"}],"type":"function"},{"constant":false,"inputs":[{"name":"newMinter","type":"address"}],"name":"addMinter","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"newOwner","type":"address"}],"name":"changeOwner","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"_addr","type":"address"}],"name":"coinBalanceOf","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"_value","type":"uint256"},{"name":"_to","type":"address"}],"name":"sendCoin","outputs":[{"name":"_success","type":"bool"}],"type":"function"},{"constant":true,"inputs":[],"name":"coinBalance","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":true,"inputs":[],"name":"numMinters","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"inputs":[],"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"sender","type":"address"},{"indexed":false,"name":"receiver","type":"address"},{"indexed":false,"name":"amount","type":"uint256"}],"name":"CoinTransfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"receiver","type":"address"},{"indexed":false,"name":"amount","type":"uint256"}],"name":"CoinMinted","type":"event"}];EarthDollarWalletsContract = web3.eth.contract(EarthDollarWalletsAbi);EarthDollarWallets = EarthDollarWalletsContract.at('0xc112721cf117b6c186ec9c0c8dbc8786570076de');EarthDollarAbi = [{"constant":true,"inputs":[],"name":"minter","outputs":[{"name":"","type":"address"}],"type":"function"},{"constant":false,"inputs":[],"name":"getBalance","outputs":[{"name":"balanace","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"owner","type":"address"}],"name":"numberCertificatesForOwner","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"receiver","type":"address"},{"name":"value","type":"uint256"},{"name":"serial","type":"uint256"}],"name":"createCertificate","outputs":[],"type":"function"},{"constant":false,"inputs":[],"name":"doInterestsPayouts","outputs":[{"name":"success","type":"bool"}],"type":"function"},{"constant":false,"inputs":[{"name":"receiver","type":"address"},{"name":"amount","type":"uint256"}],"name":"sendDollar","outputs":[{"name":"sufficient","type":"bool"}],"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"certificates","outputs":[{"name":"owner","type":"address"},{"name":"value","type":"uint256"},{"name":"serial","type":"uint256"},{"name":"lastPayout","type":"uint256"}],"type":"function"},{"constant":true,"inputs":[],"name":"numCertificates","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[],"name":"totalNumberOfCertificates","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"owner","type":"address"},{"name":"index","type":"uint256"}],"name":"getCertificateSerialForOwner","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"dollarBalanceOf","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"receiver","type":"address"},{"name":"value","type":"uint256"}],"name":"mintDollar","outputs":[{"name":"success","type":"bool"}],"type":"function"},{"constant":false,"inputs":[],"name":"getMinter","outputs":[{"name":"","type":"address"}],"type":"function"},{"constant":false,"inputs":[{"name":"owner","type":"address"},{"name":"index","type":"uint256"}],"name":"getCertificateValueForOwner","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"receiver","type":"address"},{"name":"serial","type":"uint256"}],"name":"transferCertificate","outputs":[{"name":"success","type":"bool"}],"type":"function"},{"constant":false,"inputs":[{"name":"m","type":"address"}],"name":"setMinter","outputs":[{"name":"success","type":"bool"}],"type":"function"},{"inputs":[],"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"sender","type":"address"},{"indexed":false,"name":"receiver","type":"address"},{"indexed":false,"name":"amount","type":"uint256"}],"name":"CoinTransfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"sender","type":"address"},{"indexed":false,"name":"receiver","type":"address"},{"indexed":false,"name":"serial","type":"uint256"}],"name":"CertificateTransfer","type":"event"}];EarthDollarContract = web3.eth.contract(EarthDollarAbi);EarthDollar = EarthDollarContract.at('0xa3b98c26ea2271025767b8485c18d67e10d715a9');
+    </script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+
+
+
+  </head>
+
+
+  <body ng-controller="EarthDollarCtrl">
+    <div class="shade"></div>
+    <div class="container">
+      <h1>Earth Dollar Wallet v0.0.1</h1>
+      <h2>Your accounts:</h2>
+      <ul class="account-list">
+        <li class="account-entry header">
+          <span>Account</span>
+          <span>Earth Dollar amount</span>
+          <span></span>
+        </li>
+        <li class="account-entry" ng-repeat="account in accounts">
+          <span class="account-label">{{account.address}}: </span>
+          <span class="account-amount">{{account.amount}}</span>
+          <span>
+            <div class="btn btn-primary" ng-click="showSendDialog(account.address)">Send Coins</div>
+          <span>
+        </li>
+      </ul>
+
+      <div id="minter-interface" ng-show="isMinter">
+        <div class="btn btn-success" ng-click="showMintDialog()">Mint Coins</div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel">{{modalHeader}}</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="recipient-address" class="control-label">Recipient:</label>
+                <input type="text" class="form-control" id="recipient-name" ng-model="recipientAddress">
+              </div>
+              <div class="form-group">
+                <label for="amount" class="control-label">Amount:</label>
+                <input type="number" class="form-control" id="message-text" ng-model="amount"></input>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" ng-click="dialogOkButton()">{{modalHeader}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
