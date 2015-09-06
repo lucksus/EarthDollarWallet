@@ -195,7 +195,7 @@ angular.module('EarthDollarWallet', []).controller('EarthDollarCtrl', function($
       }
     ];
     EarthDollarWalletsContract = web3.eth.contract(EarthDollarWalletsAbi);
-    this.EarthDollarWallets = EarthDollarWalletsContract.at('0xc112721cf117b6c186ec9c0c8dbc8786570076de');
+    this.EarthDollarWallets = EarthDollarWalletsContract.at('0x449c5b639e9852ada644ffaacfe325dfce6e6e0a');
     ref = web3.eth.accounts;
     results = [];
     for (j = 0, len = ref.length; j < len; j++) {
