@@ -16,7 +16,9 @@ angular.module('EarthDollarWallet', []).controller('EarthDollarCtrl', function($
       }))
     });
     for (i = k = 0, ref1 = EarthDollarWallets.numMinters.call(); k <= ref1; i = k += 1) {
-      if (EarthDollarWallets.minterAt(i) === account) {
+      if (EarthDollarWallets.minterAt.call(i, {
+        from: account
+      }) === account) {
         $scope.isMinter = true;
         $scope.minterAccounts.push(account);
       }
