@@ -27,11 +27,11 @@ angular.module('EarthDollarWallet', [])
           if account == entry.address
             entry.amount = parseInt(EarthDollarWallets.coinBalance.call({from: account}))
             found = true
-        unless found
-          $scope.accounts.push {
-            address: entry.address,
-            amount: parseInt(EarthDollarWallets.coinBalance.call({from: entry.address}))
-          }
+          unless found
+            $scope.accounts.push {
+              address: entry.address,
+              amount: parseInt(EarthDollarWallets.coinBalance.call({from: entry.address}))
+            }
 
 
     $interval updateBalances, 1000
