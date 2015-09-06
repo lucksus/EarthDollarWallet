@@ -10,7 +10,7 @@ angular.module('EarthDollarWallet', []).controller('EarthDollarCtrl', function($
   this.EarthDollarWallets = {};
   connect = function() {
     var EarthDollarWalletsAbi, EarthDollarWalletsContract, account, i, j, len, ref, results;
-    web3.setProvider(new web3.providers.HttpProvider('http://localhost:8101'));
+    web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545'));
     web3.eth.defaultAccount = web3.eth.accounts[0];
     EarthDollarWalletsAbi = [
       {
