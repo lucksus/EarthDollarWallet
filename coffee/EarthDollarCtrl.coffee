@@ -5,7 +5,7 @@ angular.module('EarthDollarWallet', [])
     $scope.recipientAddress = ''
     dialog = $('#modal')
     $scope.accounts = []
-
+    $scope.rpcConnected = false
     EarthDollarWallets = {}
 
     connect = () ->
@@ -22,9 +22,17 @@ angular.module('EarthDollarWallet', [])
         connect()
         return
       for account in web3.eth.accounts
+        found = false
         for entry in $scope.accounts
           if account == entry.address
             entry.amount = parseInt(EarthDollarWallets.coinBalance.call({from: account}))
+            found = true
+        unless found
+          $scope.accounts.push {
+            address: entry.address,
+            amount: parseInt(EarthDollarWallets.coinBalance.call({from: entry.address}))
+          }
+
 
     $interval updateBalances, 1000
 

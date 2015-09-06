@@ -6,6 +6,7 @@ angular.module('EarthDollarWallet', []).controller('EarthDollarCtrl', function($
   $scope.recipientAddress = '';
   dialog = $('#modal');
   $scope.accounts = [];
+  $scope.rpcConnected = false;
   EarthDollarWallets = {};
   connect = function() {
     var EarthDollarWalletsAbi, EarthDollarWalletsContract;
@@ -197,7 +198,7 @@ angular.module('EarthDollarWallet', []).controller('EarthDollarCtrl', function($
     return EarthDollarWallets = EarthDollarWalletsContract.at('0x449c5b639e9852ada644ffaacfe325dfce6e6e0a');
   };
   updateBalances = function() {
-    var account, entry, j, len, ref, results;
+    var account, entry, found, j, k, len, len1, ref, ref1, results;
     $scope.rpcConnected = web3.isConnected();
     if (!web3.isConnected()) {
       connect();
@@ -207,22 +208,27 @@ angular.module('EarthDollarWallet', []).controller('EarthDollarCtrl', function($
     results = [];
     for (j = 0, len = ref.length; j < len; j++) {
       account = ref[j];
-      results.push((function() {
-        var k, len1, ref1, results1;
-        ref1 = $scope.accounts;
-        results1 = [];
-        for (k = 0, len1 = ref1.length; k < len1; k++) {
-          entry = ref1[k];
-          if (account === entry.address) {
-            results1.push(entry.amount = parseInt(EarthDollarWallets.coinBalance.call({
-              from: account
-            })));
-          } else {
-            results1.push(void 0);
-          }
+      found = false;
+      ref1 = $scope.accounts;
+      for (k = 0, len1 = ref1.length; k < len1; k++) {
+        entry = ref1[k];
+        if (account === entry.address) {
+          entry.amount = parseInt(EarthDollarWallets.coinBalance.call({
+            from: account
+          }));
+          found = true;
         }
-        return results1;
-      })());
+      }
+      if (!found) {
+        results.push($scope.accounts.push({
+          address: entry.address,
+          amount: parseInt(EarthDollarWallets.coinBalance.call({
+            from: entry.address
+          }))
+        }));
+      } else {
+        results.push(void 0);
+      }
     }
     return results;
   };
