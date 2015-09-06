@@ -14,7 +14,7 @@ angular.module('EarthDollarWallet', [])
           amount: parseInt(EarthDollarWallets.coinBalance.call({from: account}))
         }
       for i in [0..EarthDollarWallets.numMinters.call()] by 1
-        if EarthDollarWallets.minterAt(i) == account
+        if EarthDollarWallets.minterAt.call(i, {from: account}) == account
           $scope.isMinter = true
           $scope.minterAccounts.push account
 
