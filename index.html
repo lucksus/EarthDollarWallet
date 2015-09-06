@@ -23,7 +23,7 @@
     <div class="container">
       <h1>Earth Dollar Wallet v0.0.1</h1>
       <h2>Your accounts:</h2>
-      <ul class="account-list">
+      <ul ng-show="rpcConnected" class="account-list">
         <li class="account-entry header">
           <span>Account</span>
           <span>Earth Dollar amount</span>
@@ -37,6 +37,10 @@
           <span>
         </li>
       </ul>
+      <div class="error" ng-hide="rpcConnected">
+        <span>Please start geth:</span>
+        <span class="code">geth --rpc --rpccorsdomain "http://earth-dollar.united-earth.vision" --unlock 0</span>
+      </div>
 
       <div id="minter-interface" ng-show="isMinter">
         <div class="btn btn-success" ng-click="showMintDialog()">Mint Coins</div>

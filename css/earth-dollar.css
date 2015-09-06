@@ -42,3 +42,8 @@ body * {
 .account-entry.header{
   font-weight: bold;
 }
+
+.error{
+  font-size: 20px;
+  color: red;
+}
