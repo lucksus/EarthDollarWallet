@@ -4,8 +4,8 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/earth-dollar.css">
     <script src="js/angular.min.js"></script>
-    <script src="js/EarthDollarCtrl.js"></script>
     <script src="js/web3.min.js"></script>
+    <script src="js/EarthDollarCtrl.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
@@ -18,7 +18,7 @@
   <body ng-controller="EarthDollarCtrl">
     <div class="shade"></div>
     <div class="container">
-      <h1>Earth Dollar Wallet v0.0.1</h1>
+      <h1>Earth Dollar Wallet v0.0.2</h1>
       <h2>Your accounts:</h2>
       <ul class="account-list">
         <li class="account-entry header">
@@ -34,9 +34,12 @@
           <span>
         </li>
       </ul>
-      <div class="error" ng-show="!rpcConnected">
-        <span>Please start geth:</span>
-        <span class="code">geth --rpc --rpccorsdomain "http://earth-dollar.united-earth.vision" --unlock 0</span>
+      <div class="error" ng-if="!hasWeb3 && settled">
+        <span>Please open this page in Mist or install <a href="https://metamask.io/">Meta Mask</a></span>
+      </div>
+
+      <div class="error" ng-show="!accounts.length && settled">
+        <span>No accounts authorized. Please choose accounts to use with Earth Dollar from your Ethereum client</span>
       </div>
 
       <div id="minter-interface" ng-show="isMinter">
